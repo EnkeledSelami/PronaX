@@ -1,0 +1,86 @@
+{
+  "name": "pronax",
+  "version": "0.5.0",
+  "description": "Albania neighbourhood intelligence desktop application",
+  "author": "Kelixel",
+  "private": true,
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "desktop": "electron .",
+    "dist:win": "next build && electron-builder --win nsis portable --x64"
+  },
+  "dependencies": {
+    "maplibre-gl": "6.16.0",
+    "next": "16.4.3",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "optionalDependencies": {
+    "@next/swc-win32-x64-msvc": "16.4.3"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "electron": "^39.8.10",
+    "electron-builder": "^26.18.0",
+    "typescript": "^5.9.0"
+  },
+  "build": {
+    "appId": "com.kelixel.pronax",
+    "productName": "PronaX",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": false,
+    "compression": "store",
+    "electronDownload": {
+      "cache": ".electron-cache"
+    },
+    "files": [
+      ".next/**/*",
+      "public/**/*",
+      "app/**/*",
+      "components/**/*",
+      "lib/**/*",
+      "electron/**/*",
+      "package.json",
+      "next.config.ts",
+      "next-env.d.ts",
+      "!tests/**/*",
+      "!docs/**/*",
+      "!node_modules/sharp/**/*",
+      "!node_modules/@img/**/*",
+      "!node_modules/@img",
+      "!.env*",
+      "!*.md"
+    ],
+    "win": {
+      "icon": "public/pronax-app-icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "PronaX-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "PronaX-Portable-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
